@@ -15,7 +15,7 @@ export default class GetRecommendPageDataViewModel {
     await getRecommendPageModel.getRecommendData()
     
     if (getRecommendPageModel.recommendDataResponse) {
-      this.recommendData = getRecommendPageModel.recommendDataResponse
+      this.recommendData = [...this.recommendData,...getRecommendPageModel.recommendDataResponse]
     }
     Logger.info(JSON.stringify(this.recommendData, null, 2))
     this.loading = false

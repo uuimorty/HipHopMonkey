@@ -165,25 +165,35 @@ export struct RecommendListPage {
 
   @Builder
   Main() {
-    Scroll(this.scroll) {
-      Column() {
+    // this.scroll
+    List() {
+      // Column() {
         ForEach(this.recPageDataViewModel.recommendData, (item: RecommendDataItem) => {
-          this.recommendListCard(item)
+          ListItem(){
+            this.recommendListCard(item)
+          }.width('100%')
+          .bindSheet($$this.commonSheetIsShow, this.commonBindSheet(), {
+            width: '100%',
+            height: 300,
+            enableOutsideInteractive: true, //允许交互，不显示蒙层
+            blurStyle: BlurStyle.Regular,
+            title: { title: '评论区', subtitle: '欢迎留下你的评论' }
+          })
+
         })
-      }
-      .width('100%')
-      .bindSheet($$this.commonSheetIsShow, this.commonBindSheet(), {
-        width: '100%',
-        height: 300,
-        enableOutsideInteractive: true, //允许交互，不显示蒙层
-        blurStyle: BlurStyle.Regular,
-        title: { title: '评论区', subtitle: '欢迎留下你的评论' }
-      })
+      // }
+
     }
     .scrollBar(BarState.Auto)
     .width('100%')
     .height('100%')
     .backgroundColor(0xf8f8f8)
+    .onScrollIndex((start, end, center) => {
+      if (center === this.recPageDataViewModel.recommendData.length - 7) {
+        console.log('current index', center + '-' + this.recPageDataViewModel.recommendData.length)
+        this.recPageDataViewModel.loadRecommendPageData()
+      }
+    })
     
     // .onScrollIndex((start,end,center)=>{
     // if (center===this.recommendJokesViewModel.data.length-7) {
