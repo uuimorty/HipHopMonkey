@@ -1,26 +1,41 @@
+import { request } from "../utils/request"
 import { IBestPopup } from "@ibestservices/ibest-ui";
 import { Logger } from "@nzy/logger";
 import GetVerifyCodeViewModel from "../ViewModel/GetVerifyCodeViewModel";
-import { router } from "@kit.ArkUI";
+import { AxiosResponse } from "@ohos/axios";
+import { userLogin } from "../utils/api/VerifyCodeLoginAPI";
+import { LoginResp, LoginRespData } from "../dto/LoginCode";
 
-function getIsCanSend(phone: string) {
-  if (phone.length === 11) {
+/**
+ * 判断是否可以登录
+ * @param phone
+ * @param pwd
+ * @returns
+ */
+function getIsCanLogin(phone: string, pwd: string) {
+  if (phone.length === 11 && pwd) {
     return true
   } else {
     return false
   }
 }
 
+
 @Component
-struct Login {
-  @State phoneNumber: string = ''
+struct LoginPwd {
+  // 13227293743
+  @State phoneNumber: string = '13227293743'
+  // cretin
+  @State password: string = 'cretin'
+
+  // 判断是否有11位电话号码并且输入了密码
+  @State isSend: boolean = false;
+
   @Consume isAgreeLicense: boolean //是否同意协议
   @State upVisible: boolean = false //隐藏弹出层
-  @State verifyCodeViewModel: GetVerifyCodeViewModel = new GetVerifyCodeViewModel()
   @Consume navPathStack: NavPathStack
 
-  // 判断发送验证码按钮是否启用
-  @State isSend: boolean = false;
+
 
   build() {
     NavDestination() {
@@ -28,11 +43,7 @@ struct Login {
         cannotLogin()
         pleaseInputPhoneNumber()
         this.phoneForm()
-        if (this.verifyCodeViewModel.loading) {
-          Text('加载中')
-        } else {
-          Text(JSON.stringify(this.verifyCodeViewModel.VerifyCodeData, null, 2))
-        }
+
         anotherLoginMethod()
         // 弹出层
         IBestPopup({
@@ -59,10 +70,6 @@ struct Login {
     }.hideTitleBar(true)
     .hideBackButton(true)
     .hideToolBar(true)
-    .onBackPressed((): boolean => {
-      router.back();
-      return true;
-    })
   }
 
   // 自定义表单UI组件
@@ -70,33 +77,54 @@ struct Login {
   phoneForm() {
     Column({ space: 18 }) {
       Row() {
-        Select([{
-          value: '+86'
-        }, {
-          value: '+11'
-        }, {
-          value: '+45'
-        }, {
-          value: '+47'
-        }]).value('+86')
-          .backgroundColor(Color.Transparent)
-        TextInput({
-          text: $$this.phoneNumber,
-          placeholder: '请输入手机号',
-        }).maxLength(11)
+        TextInput({ text: $$this.phoneNumber, placeholder: '请输入手机号'})
+          .placeholderColor(Color.Grey)
           .type(InputType.PhoneNumber)
+          .maxLength(11)
+          .placeholderFont({ size: 14, weight: 700 })
+          .caretColor(Color.Blue)
+          .fontSize(14)
+          .fontColor(Color.Black)
           .backgroundColor(Color.Transparent)
+          .border({
+            color: Color.Transparent,
+            width: 0
+          })
           .onChange((value: string) => {
-            this.isSend = getIsCanSend(value)
+            this.isSend = getIsCanLogin(this.phoneNumber, this.password)
           })
       }
       .width('100%')
       .height(60)
-      .backgroundColor('#f7f7f7')
+      .backgroundColor('#f6f6f6')
       .padding({ left: 10, right: 10 })
       .borderRadius(24)
 
-      Button(`获取短信验证码`,{ stateEffect: this.isSend })
+      Row() {
+        TextInput({ text: $$this.password, placeholder: '请输入密码'})
+          .placeholderColor(Color.Grey)
+          .type(InputType.Password)
+          .maxLength(11)
+          .placeholderFont({ size: 14, weight: 700 })
+          .caretColor(Color.Blue)
+          .fontSize(14)
+          .fontColor(Color.Black)
+          .backgroundColor(Color.Transparent)
+          .border({
+            color: Color.Transparent,
+            width: 0
+          })
+          .onChange((value: string) => {
+            this.isSend = getIsCanLogin(this.phoneNumber, this.password)
+          })
+      }
+      .width('100%')
+      .height(60)
+      .backgroundColor('#f6f6f6')
+      .padding({ left: 10, right: 10 })
+      .borderRadius(24)
+
+      Button(`登录`,{ stateEffect: this.isSend })
         .opacity(this.isSend ? 1 : 0.4)
         .width('100%')
         .height(60)
@@ -104,23 +132,31 @@ struct Login {
           if (!this.isAgreeLicense) {
             this.upVisible = true
           } else {
+            // 账号密码登录
             if (this.isSend) {
-              // 发送获取验证码的请求
-              this.verifyCodeViewModel.loadVerifyCodeData(this.phoneNumber).then(() => {
-                Logger.info(JSON.stringify(this.verifyCodeViewModel.VerifyCodeData, null, 2))
-                // 验证码获取成功，跳转到验证码填写页
-                if (this.verifyCodeViewModel.VerifyCodeData.code === 200) {
-                  this.navPathStack.pushPath({ name: 'VerifyCode', param: this.phoneNumber })
+              userLogin(this.phoneNumber, this.password).then((res: AxiosResponse<LoginResp>) => {
+                console.log("res", JSON.stringify(res.data.data, null, 2))
+                if (res.data.code === 200) {
+                  // 定义全局状态并持久化
+                  AppStorage.set<LoginRespData>("userInfo", res.data.data)
+                  AppStorage.set("token", res.data.data?.token)
+                  // 跳转首页
+                  this.navPathStack.replacePath({ name: 'Index' })
+                } else {
+                  // todo 账号或密码错误
                 }
+
+              }).catch((err: object) => {
+                console.log("res", JSON.stringify(err, null, 2))
               })
             }
           }
         })
 
-      Text('密码登录').fontColor('#979797')
-        .onClick(()=>{
+      Text('验证码登录').fontColor('#979797')
+        .onClick(() => {
           // 调用账号密码登录
-          this.navPathStack.pushPath({ name: "LoginPwd" })
+          this.navPathStack.popToName("Login")
         })
 
       Row() {
@@ -138,7 +174,7 @@ struct Login {
   }
 
   @Builder
-  popCustomerContent(component: Login) {
+  popCustomerContent(component: LoginPwd) {
     Column({ space: 12 }) {
       Row({ space: 8 }) {
         Text(`《用户协议》`).fontColor('#75cafe')
@@ -167,7 +203,7 @@ struct Login {
   }
 
   @Builder
-  popCustomerHeader(component: Login) {
+  popCustomerHeader(component: LoginPwd) {
     Row({ space: 12 }) {
       SymbolGlyph($r('sys.symbol.xmark'))
         .onClick(() => {
@@ -243,6 +279,6 @@ function logo() {
 }
 
 @Builder
-export function LoginPageBuilder() {
-  Login()
+export function LoginPwdBuilder() {
+  LoginPwd()
 }

@@ -11,6 +11,11 @@
       "buildFunction": "LoginPageBuilder"
     },
     {
+      "name": "LoginPwd",
+      "pageSourceFile": "src/main/ets/pages/LoginPwd.ets",
+      "buildFunction": "LoginPwdBuilder"
+    },
+    {
       "name": "VerifyCode",
       "pageSourceFile": "src/main/ets/pages/VerifyCode.ets",
       "buildFunction": "VerifyCodeBuilder"

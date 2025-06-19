@@ -1,5 +1,6 @@
 import { LoginCode } from "../dto/LoginCode"
 import { Home } from "./Home"
+import { router } from "@kit.ArkUI"
 
 @Preview
 @Component
@@ -62,6 +63,10 @@ struct Index {
     .hideTitleBar(true)
     .hideBackButton(true)
     .hideToolBar(true)
+    .onBackPressed((): boolean => {
+      router.back();
+      return true;
+    })
   }
 }
 

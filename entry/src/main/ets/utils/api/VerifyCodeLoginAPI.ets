@@ -1,5 +1,5 @@
 import { AxiosResponse } from '@ohos/axios'
-import { LoginCode } from '../../dto/LoginCode'
+import { LoginCode, LoginResp } from '../../dto/LoginCode'
 import { request } from '../request'
 
 /**
@@ -13,5 +13,16 @@ export function VerifyCodeLoginAPI(code: string, phone: string) {
     params: {
       code, phone
     }
+  })
+}
+
+/**
+ * 用户账号密码登录
+ * @param phoneNumber
+ * @param password
+ */
+export function userLogin(phoneNumber:string,password:string) {
+  return request.post<LoginResp>('/user/login/psw', null, {
+    params: { phone: phoneNumber, psw: password }
   })
 }
