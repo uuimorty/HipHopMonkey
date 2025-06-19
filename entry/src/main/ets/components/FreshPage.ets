@@ -22,7 +22,7 @@ export struct FreshPage {
     Scroll(this.scroll) {
       Column() {
         Text('新鲜页').fontSize(40)
-        Text('你好啊')
+        Text('???')
 
       }
       .width('100%')
