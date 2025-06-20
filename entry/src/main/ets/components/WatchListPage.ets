@@ -1,6 +1,6 @@
 import GetWatchListViewModel from '../ViewModel/WatchListViewModel'
 // 下拉刷新组件
-import { IBestPullRefresh } from "@ibestservices/ibest-ui";
+import { IBestLoading, IBestPullRefresh } from "@ibestservices/ibest-ui";
 import { WatchListDataTypeData } from '../dto/WatchListDataType';
 import GetAttentionViewModel from '../ViewModel/AttentionUserViewModel';
 
@@ -61,14 +61,20 @@ export struct WatchListPage {
 
   build() {
     Column() {
-      IBestPullRefresh({
-        loading: $isLoading,
-        scroller: this.listScroller,
-        defaultContent: (): void => this.customContent(),
-        onRefresh: (): void => this.onRefresh(),
-        successText: '刷新成功',
-        isEnableSlideUp: false
-      })
+      if (this.watchListViewModel.loading) {
+        Column() {
+          IBestLoading({ loadingText: '玩命加载中...', loadingTextFontSize: 18, loadingSize: 30 })
+        }.width('100%').height('100%').justifyContent(FlexAlign.Center)
+      } else {
+        IBestPullRefresh({
+          loading: $isLoading,
+          scroller: this.listScroller,
+          defaultContent: (): void => this.customContent(),
+          onRefresh: (): void => this.onRefresh(),
+          successText: '刷新成功',
+          isEnableSlideUp: false
+        })
+      }
     }
     .height('100%')
     .width('100%')

@@ -9,15 +9,18 @@ export default class GetRecommendPageDataViewModel {
   @Track recommendData: RecommendDataItem[] = []
   @Track loading: boolean = true
 
-  async loadRecommendPageData() {
+  async loadRecommendPageData(isFresh?: boolean) {
     const getRecommendPageModel = new RecommendPageModel()
 
     await getRecommendPageModel.getRecommendData()
-    
+
     if (getRecommendPageModel.recommendDataResponse) {
-      this.recommendData = [...this.recommendData,...getRecommendPageModel.recommendDataResponse]
+      if (isFresh) {
+        this.recommendData = getRecommendPageModel.recommendDataResponse
+      } else {
+        this.recommendData = [...this.recommendData, ...getRecommendPageModel.recommendDataResponse]
+      }
     }
-    Logger.info(JSON.stringify(this.recommendData, null, 2))
     this.loading = false
   }
 }
