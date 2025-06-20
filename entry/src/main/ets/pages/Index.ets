@@ -1,5 +1,6 @@
 import { LoginCode } from "../dto/LoginCode"
 import { Home } from "./Home"
+import User from './User/User'
 import { router } from "@kit.ArkUI"
 import { Message } from "./msg/Message"
 
@@ -23,7 +24,7 @@ struct Index {
       this.tabsController.changeIndex(index)
     })
   }
-    
+
   build() {
     NavDestination() {
       Tabs({ barPosition: BarPosition.End, controller: this.tabsController }) {
@@ -45,8 +46,8 @@ struct Index {
 
 
         TabContent() {
-          //   内容四
-          Text('内容四')
+
+          User()
         }.tabBar(this.TabBarItemBuilder($r('sys.symbol.person'), $r('sys.symbol.person_crop_circle_fill'), '我的', 3))
 
       }
@@ -56,7 +57,6 @@ struct Index {
       .barBackgroundColor(0Xfefffe)
       .divider({ strokeWidth: 1, color: '#eeeeee' })
       .scrollable(false)
-      .backgroundColor(0Xfefffe)
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
     }
     .height('100%')

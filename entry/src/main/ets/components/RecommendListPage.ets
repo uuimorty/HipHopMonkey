@@ -1,4 +1,4 @@
-import { IBestPullRefresh } from "@ibestservices/ibest-ui";
+import { IBestPullRefresh,IBestLoading } from "@ibestservices/ibest-ui";
 import { IBestLoading } from "@ibestservices/ibest-ui";
 import { RecommendDataItem } from "../dto/RecommendData"
 import GetRecommendPageDataViewModel from "../ViewModel/RecommendPageViewModel"
@@ -17,6 +17,7 @@ export struct RecommendListPage {
   @State commonSheetIsShow: boolean = false
   @State bindSheetIsShow: boolean = false
   private scroll: Scroller = new Scroller()
+  private controller: VideoController = new VideoController()
 
   @Builder
   myBindSheet() {
@@ -65,7 +66,7 @@ export struct RecommendListPage {
     List() {
       ForEach(this.recPageDataViewModel.recommendData, (item: RecommendDataItem) => {
         ListItem() {
-          recommendListCard({ item })
+          this.recommendListCard(item)
         }.width('100%')
         .bindSheet($$this.commonSheetIsShow, this.commonBindSheet(), {
           width: '100%',
@@ -74,7 +75,9 @@ export struct RecommendListPage {
           blurStyle: BlurStyle.Regular,
           title: { title: '评论区', subtitle: '欢迎留下你的评论' }
         })
+
       })
+
     }
     .scrollBar(BarState.Off)
     .width('100%')

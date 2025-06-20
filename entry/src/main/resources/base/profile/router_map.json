@@ -29,6 +29,11 @@
       "name": "MsgLike",
       "pageSourceFile": "src/main/ets/pages/msg/Like.ets",
       "buildFunction": "MsgLikeBuilder"
+    },
+    {
+      "name": "UserNotes",
+      "pageSourceFile": "src/main/ets/pages/User/UserNote.ets",
+      "buildFunction": "UserNotesBuilder"
     }
   ]
 }

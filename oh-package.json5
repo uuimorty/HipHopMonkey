@@ -4,7 +4,7 @@
   "dependencies": {
     "@ohos/axios": "^2.2.6",
     "@nzy/logger": "^1.0.7",
-    "@ibestservices/ibest-ui": "^2.1.1",
+    "@ibestservices/ibest-ui": "^2.1.2",
     "@satis/center-title": "^1.0.0"
   },
   "devDependencies": {
