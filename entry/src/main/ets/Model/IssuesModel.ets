@@ -4,7 +4,7 @@ import { AxiosResponse } from "@ohos/axios"
 
 export default class IssuesModel {
   issuesResponse: Issues = {}
-  
+
   async getIssues() {
     try {
       const res: AxiosResponse<Issues> = await request.get("/github/issues")

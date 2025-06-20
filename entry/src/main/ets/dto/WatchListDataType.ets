@@ -1,13 +1,16 @@
+@Observed
 export class WatchListDataType {
-	code?: number = 0;
-	data?: WatchListDataTypeData[] = [];
-	msg?: string = "";
+  @Track code?: number = 0;
+  @Track data?: WatchListDataTypeData[] = [];
+  @Track msg?: string = "";
 }
+
+@Observed
 export class WatchListDataTypeData {
-	avatar?: string = "";
-	fansNum?: string = "";
-	isAttention?: boolean = false;
-	jokesNum?: string = "";
-	nickname?: string = "";
-	userId?: number = 0;
+  @Track avatar?: string = "";
+  @Track fansNum?: string = "";
+  @Track isAttention?: boolean = false;
+  @Track jokesNum?: string = "";
+  @Track nickname?: string = "";
+  @Track userId?: number = 0;
 }

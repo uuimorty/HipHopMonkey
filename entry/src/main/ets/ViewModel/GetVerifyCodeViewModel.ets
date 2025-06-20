@@ -11,7 +11,7 @@ export default class GetVerifyCodeViewModel {
   async loadVerifyCodeData(phone: string) {
     const getVerifyCodeModel = new VerifyCodeModel()
     await getVerifyCodeModel.getVerifyCode(phone)
-
+    
     if (getVerifyCodeModel.verifyCodeResponse) {
       this.VerifyCodeData = getVerifyCodeModel.verifyCodeResponse
     }

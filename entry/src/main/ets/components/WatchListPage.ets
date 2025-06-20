@@ -1,13 +1,15 @@
 import GetWatchListViewModel from '../ViewModel/WatchListViewModel'
 // 下拉刷新组件
 import { IBestPullRefresh } from "@ibestservices/ibest-ui";
-import { IBestButton } from "@ibestservices/ibest-ui";
 import { WatchListDataTypeData } from '../dto/WatchListDataType';
+import GetAttentionViewModel from '../ViewModel/AttentionUserViewModel';
+
 
 @Component
 export struct WatchListPage {
   @State watchListViewModel: GetWatchListViewModel = new GetWatchListViewModel()
   @State isLoading: boolean = this.watchListViewModel.loading
+  @State attentionUserViewModel: GetAttentionViewModel = new GetAttentionViewModel()
   private listScroller: ListScroller = new ListScroller()
 
   @Builder
@@ -25,12 +27,7 @@ export struct WatchListPage {
       .layoutWeight(1)
       .alignItems(HorizontalAlign.Start)
 
-      Button('+ 关注')
-        .fontColor(0Xe1c8ae)
-        .width(70)
-        .height(40)
-        .backgroundColor(Color.White)
-        .border({ width: 1, color: 0Xe1c8ae, radius: 30 })
+      FollowingButton({ item, attentionUserViewModel: this.attentionUserViewModel })
     }
     .width('100%')
     .padding({ top: 12, bottom: 12 })
@@ -75,5 +72,33 @@ export struct WatchListPage {
     }
     .height('100%')
     .width('100%')
+  }
+}
+
+@Component
+struct FollowingButton {
+  @State item: WatchListDataTypeData = new WatchListDataTypeData()
+  @Prop attentionUserViewModel: GetAttentionViewModel = new GetAttentionViewModel()
+
+  build() {
+    Button(this.item.isAttention ? "已关注" : '+ 关注')
+      .fontColor(this.item.isAttention ? Color.Gray : Color.Black)
+      .width(70)
+      .height(40)
+      .backgroundColor(Color.White)
+      .border({ width: 1, color: this.item.isAttention ? 0Xe1c8ae : 0x777777, radius: 30 })
+      .onClick(async () => {
+        this.attentionUserViewModel.loadingAttentionUserData({
+          userId: this.item.userId!.toString(),
+          status: this.item.isAttention ? '0' : '1'  // 根据状态发送正确的请求
+        }).then(() => {
+          if (this.attentionUserViewModel.attentionState === 0) {
+            this.item.isAttention = false
+          } else {
+            this.item.isAttention = true
+          }
+        })
+        console.log(JSON.stringify(this.attentionUserViewModel.attentionUserData, null, 2))
+      })
   }
 }

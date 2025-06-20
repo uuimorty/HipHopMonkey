@@ -1,4 +1,3 @@
-import { AxiosResponse } from '@ohos/axios'
 import { LoginCode, LoginResp } from '../../dto/LoginCode'
 import { request } from '../request'
 
@@ -21,7 +20,7 @@ export function VerifyCodeLoginAPI(code: string, phone: string) {
  * @param phoneNumber
  * @param password
  */
-export function userLogin(phoneNumber:string,password:string) {
+export function userLogin(phoneNumber: string, password: string) {
   return request.post<LoginResp>('/user/login/psw', null, {
     params: { phone: phoneNumber, psw: password }
   })

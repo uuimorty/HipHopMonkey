@@ -20,5 +20,7 @@ request.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const token = AppStorage.get('token')!
     config.headers.token = token
   }
+  console.log(`===================$${config.url}==================`)
+  console.log(JSON.stringify(config.params, null, 2));
   return config;
 })

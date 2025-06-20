@@ -22,7 +22,7 @@ struct Index {
       this.tabsController.changeIndex(index)
     })
   }
-
+    
   build() {
     NavDestination() {
       Tabs({ barPosition: BarPosition.End, controller: this.tabsController }) {

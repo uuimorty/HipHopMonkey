@@ -18,7 +18,6 @@ struct Login {
   @State upVisible: boolean = false //隐藏弹出层
   @State verifyCodeViewModel: GetVerifyCodeViewModel = new GetVerifyCodeViewModel()
   @Consume navPathStack: NavPathStack
-
   // 判断发送验证码按钮是否启用
   @State isSend: boolean = false;
 
@@ -28,11 +27,6 @@ struct Login {
         cannotLogin()
         pleaseInputPhoneNumber()
         this.phoneForm()
-        if (this.verifyCodeViewModel.loading) {
-          Text('加载中')
-        } else {
-          Text(JSON.stringify(this.verifyCodeViewModel.VerifyCodeData, null, 2))
-        }
         anotherLoginMethod()
         // 弹出层
         IBestPopup({
@@ -96,7 +90,7 @@ struct Login {
       .padding({ left: 10, right: 10 })
       .borderRadius(24)
 
-      Button(`获取短信验证码`,{ stateEffect: this.isSend })
+      Button(`获取短信验证码`, { stateEffect: this.isSend })
         .opacity(this.isSend ? 1 : 0.4)
         .width('100%')
         .height(60)
@@ -118,7 +112,7 @@ struct Login {
         })
 
       Text('密码登录').fontColor('#979797')
-        .onClick(()=>{
+        .onClick(() => {
           // 调用账号密码登录
           this.navPathStack.pushPath({ name: "LoginPwd" })
         })
@@ -227,7 +221,7 @@ function anotherLoginMethod() {
   .width('100%')
   .position({
     bottom: 18,
-    left:'50%'
+    left: '50%'
   })
   .translate({ x: '-50%' })
   .justifyContent(FlexAlign.Center)
