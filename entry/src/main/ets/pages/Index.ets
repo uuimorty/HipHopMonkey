@@ -1,6 +1,7 @@
 import { LoginCode } from "../dto/LoginCode"
 import { Home } from "./Home"
 import { router } from "@kit.ArkUI"
+import { Message } from "./msg/Message"
 
 @Preview
 @Component
@@ -38,8 +39,8 @@ struct Index {
 
 
         TabContent() {
-          //   内容三
-          Text('内容三')
+          //  消息页面
+          Message()
         }.tabBar(this.TabBarItemBuilder($r('sys.symbol.message'), $r('sys.symbol.message_fill'), '消息', 2))
 
 

@@ -19,6 +19,16 @@
       "name": "VerifyCode",
       "pageSourceFile": "src/main/ets/pages/VerifyCode.ets",
       "buildFunction": "VerifyCodeBuilder"
+    },
+    {
+      "name": "Message",
+      "pageSourceFile": "src/main/ets/pages/msg/Message.ets",
+      "buildFunction": "MessageBuilder"
+    },
+    {
+      "name": "MsgLike",
+      "pageSourceFile": "src/main/ets/pages/msg/Like.ets",
+      "buildFunction": "MsgLikeBuilder"
     }
   ]
 }

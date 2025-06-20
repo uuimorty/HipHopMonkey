@@ -1,5 +1,9 @@
 {
   "src": [
     "App"
-  ]
+  ],
+  "window": {
+    "designWidth": 900,
+    "autoDesignWidth": false
+  }
 }
