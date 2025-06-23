@@ -43,6 +43,9 @@ function TopIcon(navPathStack: NavPathStack){
         .backgroundColor('#e16148')
       Text('评论')
     }.width('100lpx')
+    .onClick(()=>{
+      navPathStack.pushPath({name:'MsgLike',param:new MessageReq("1","1")})
+    })
 
     Column(){
       Row(){
@@ -56,6 +59,9 @@ function TopIcon(navPathStack: NavPathStack){
         .backgroundColor('#3478f5')
       Text('关注')
     }.width('100lpx')
+    .onClick(()=>{
+      navPathStack.pushPath({name:'MsgLike',param:new MessageReq("1","2")})
+    })
 
 
   }.width("100%").height('160lpx')

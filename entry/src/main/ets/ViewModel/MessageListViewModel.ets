@@ -9,16 +9,19 @@ export default class MessageListViewModel {
   @Track data: MessageRespData[] = []
   @Track loading: boolean = true
 
-  getMessageListData(params:MessageReq) {
+  async getMessageListData(params:MessageReq,isRefresh?:boolean) {
     const model = new MessageListModel()
-    model.getMessageList(params).then(res=>{
-      if (model.resp.data) {
+    // this.loading=true
+    await model.getMessageList(params)
+    if (model.resp.data) {
+      if (isRefresh) {
         this.data = model.resp.data
+      } else {
+        this.data = [...this.data, ...model.resp.data]
       }
       Logger.info('loading=' + this.loading)
       Logger.info(JSON.stringify(this.data))
-      this.loading = false
-    })
-
+    }
+    this.loading = false
   }
 }
