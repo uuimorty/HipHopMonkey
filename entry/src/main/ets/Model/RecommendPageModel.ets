@@ -5,11 +5,9 @@ import { request } from '../utils/request'
 
 export default class RecommendPageModel {
   recommendDataResponse: RecommendDataItem[] = []
-
   async getRecommendData() {
     try {
       const res: AxiosResponse<RecommendData> = await request.post('/home/recommend')
-      Logger.info(JSON.stringify(res.data.data, null, 2))
       if (res.data) {
         this.recommendDataResponse = res.data.data!
       }

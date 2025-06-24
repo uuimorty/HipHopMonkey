@@ -7,18 +7,6 @@ struct App {
   @Provide navPathStack: NavPathStack = new NavPathStack()
   @Provide isAgreeLicense: boolean = false;
   
-  // aboutToAppear(): void {
-  //   setTimeout(() => {
-  //     const token: string = AppStorage.get('token')!
-  //     console.log('token', token)
-  //     if (token) {
-  //       this.navPathStack.pushPath({ name: 'Index' })
-  //     } else {
-  //       this.navPathStack.pushPath({ name: 'Login' })
-  //     }
-  //   }, 200)
-  // }
-
   build() {
     Navigation(this.navPathStack) {
       Column() {

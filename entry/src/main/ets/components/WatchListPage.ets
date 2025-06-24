@@ -104,7 +104,6 @@ struct FollowingButton {
             this.item.isAttention = true
           }
         })
-        console.log(JSON.stringify(this.attentionUserViewModel.attentionUserData, null, 2))
       })
   }
 }

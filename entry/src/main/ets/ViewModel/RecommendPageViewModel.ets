@@ -1,5 +1,4 @@
 //获取Model层的数据，同时，数据变化UI要刷新
-import { Logger } from "@nzy/logger"
 import { RecommendDataItem } from "../dto/RecommendData"
 import RecommendPageModel from "../Model/RecommendPageModel"
 

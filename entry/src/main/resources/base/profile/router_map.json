@@ -34,6 +34,16 @@
       "name": "UserNotes",
       "pageSourceFile": "src/main/ets/pages/User/UserNote.ets",
       "buildFunction": "UserNotesBuilder"
+    },
+    {
+      "name": "ReportJokeUser",
+      "pageSourceFile": "src/main/ets/pages/report/reportJokeUser.ets",
+      "buildFunction": "repostJokeUserBuilder"
+    },
+    {
+      "name": "ReportJokeContent",
+      "pageSourceFile": "src/main/ets/pages/report/reportJokeContent.ets",
+      "buildFunction": "repostJokeContentBuilder"
     }
   ]
 }

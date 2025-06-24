@@ -1,4 +1,3 @@
-import { LoginCode } from "../dto/LoginCode"
 import { Home } from "./Home"
 import User from './User/User'
 import { router } from "@kit.ArkUI"
@@ -46,7 +45,6 @@ struct Index {
 
 
         TabContent() {
-
           User()
         }.tabBar(this.TabBarItemBuilder($r('sys.symbol.person'), $r('sys.symbol.person_crop_circle_fill'), '我的', 3))
 

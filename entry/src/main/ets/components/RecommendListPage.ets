@@ -1,8 +1,7 @@
-import { IBestPullRefresh, IBestLoading } from "@ibestservices/ibest-ui";
+import { IBestLoading } from "@ibestservices/ibest-ui"
 import { RecommendDataItem } from "../dto/RecommendData"
 import GetRecommendPageDataViewModel from "../ViewModel/RecommendPageViewModel"
 import { recommendListCard } from "./recommendListCard";
-
 
 @Component
 export struct RecommendListPage {
@@ -12,23 +11,7 @@ export struct RecommendListPage {
   @State refreshing: boolean = false;
   @State commonSheetIsShow: boolean = false
   @State bindSheetIsShow: boolean = false
-  private scroll: Scroller = new Scroller()
-  private controller: VideoController = new VideoController()
-
-  @Builder
-  myBindSheet() {
-    Column() {
-      Text('bindSheet').fontSize(30)
-    }
-    .width('100%')
-    .height('100%')
-    .padding({
-      top: 16,
-      bottom: 16
-    })
-    .justifyContent(FlexAlign.Center)
-    .alignItems(HorizontalAlign.Start)
-  }
+  @Provide recommendDataList: RecommendDataItem[] = []
 
   async onRefresh() {
     // 重新加载数据
@@ -37,17 +20,19 @@ export struct RecommendListPage {
     this.refreshing = this.recPageDataViewModel.loading
   }
 
-  aboutToAppear(): void {
-    this.recPageDataViewModel.loadRecommendPageData()
+  async aboutToAppear(): Promise<void> {
+    await this.recPageDataViewModel.loadRecommendPageData()
+    this.recommendDataList = this.recPageDataViewModel.recommendData
   }
 
   @Builder
   Main() {
     Refresh({ refreshing: $$this.refreshing }) {
+
       List() {
-        ForEach(this.recPageDataViewModel.recommendData, (item: RecommendDataItem) => {
+        ForEach(this.recommendDataList, (item: RecommendDataItem, index: number) => {
           ListItem() {
-            recommendListCard({ item })
+            recommendListCard({ item, index })
           }.width('100%')
         })
       }
