@@ -15,8 +15,8 @@ export default class EntryFormAbility extends FormExtensionAbility {
     PreferencesUtil.set(formName, formId)
 
     return formBindingData.createFormBindingData({
-      recommendTitle: '初始标题',
-      recommendContent: '初始内容'
+      recommendTitle: '跳转到消息标题',
+      recommendContent: '跳转到消息内容'
     });
   }
 
