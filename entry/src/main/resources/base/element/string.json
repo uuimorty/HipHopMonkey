@@ -27,6 +27,14 @@
     {
       "name": "recommendWidget_desc",
       "value": "热点大小事，随时都知道"
+    },
+    {
+      "name": "userWidget_display_name",
+      "value": "嘻哈猴用户"
+    },
+    {
+      "name": "userWidget_desc",
+      "value": "快速访问用户"
     }
 
   ]

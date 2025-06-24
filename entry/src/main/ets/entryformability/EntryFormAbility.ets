@@ -16,7 +16,9 @@ export default class EntryFormAbility extends FormExtensionAbility {
 
     return formBindingData.createFormBindingData({
       recommendTitle: '跳转到消息标题',
-      recommendContent: '跳转到消息内容'
+      recommendContent: '跳转到消息内容',
+      userTitle:'跳转到用户标题',
+      userContent:'跳转到用户内容'
     });
   }
 

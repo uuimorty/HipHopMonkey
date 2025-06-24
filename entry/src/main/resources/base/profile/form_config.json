@@ -1,10 +1,10 @@
 {
   "forms": [
     {
-      "name": "recommendWidget",
-      "displayName": "$string:recommendWidget_display_name",
-      "description": "$string:recommendWidget_desc",
-      "src": "./ets/recommendwidget/pages/RecommendWidgetCard.ets",
+      "name": "userWidget",
+      "displayName": "$string:userWidget_display_name",
+      "description": "$string:userWidget_desc",
+      "src": "./ets/recommendwidget/pages/UserWidgetCard.ets",
       "uiSyntax": "arkts",
       "window": {
         "designWidth": 720,
@@ -20,6 +20,28 @@
       "supportDimensions": [
         "2*2"
       ]
+    },
+    {
+      "name": "recommendWidget",
+      "displayName": "$string:recommendWidget_display_name",
+      "description": "$string:recommendWidget_desc",
+      "src": "./ets/recommendwidget/pages/RecommendWidgetCard.ets",
+      "uiSyntax": "arkts",
+      "window": {
+        "designWidth": 720,
+        "autoDesignWidth": true
+      },
+      "colorMode": "auto",
+      "isDynamic": true,
+      "isDefault": false,
+      "updateEnabled": false,
+      "scheduledUpdateTime": "10:30",
+      "updateDuration": 1,
+      "defaultDimension": "2*2",
+      "supportDimensions": [
+        "2*2"
+      ]
     }
+
   ]
 }
