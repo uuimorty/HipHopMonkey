@@ -7,7 +7,15 @@ import { Message } from "./msg/Message"
 @Component
 struct Index {
   @State activeIndex: number = 0
-  private tabsController: TabsController = new TabsController()
+  // 通过卡片跳转的索引
+  @Consume targetNavIndex:number;
+  private  tabsController: TabsController = new TabsController()
+
+  // updateActiveIndexByCard(){
+  //   console.log('watch!!!!!')
+  //   this.activeIndex=this.targetNavIndex
+  //   this.tabsController.changeIndex(this.targetNavIndex)
+  // }
 
   @Builder
   TabBarItemBuilder(defaultIcon: Resource, activeIcon: Resource, label: string, index: number) {
@@ -26,7 +34,7 @@ struct Index {
 
   build() {
     NavDestination() {
-      Tabs({ barPosition: BarPosition.End, controller: this.tabsController }) {
+      Tabs({ barPosition: BarPosition.End, index:this.activeIndex, controller: this.tabsController }) {
         TabContent() {
           Home()
         }
@@ -56,17 +64,48 @@ struct Index {
       .divider({ strokeWidth: 1, color: '#eeeeee' })
       .scrollable(false)
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
+
     }
     .height('100%')
     .width('100%')
     .hideTitleBar(true)
     .hideBackButton(true)
     .hideToolBar(true)
+    .onShown(()=>{
+
+      // 尝试拿卡片进入索引，有就直接使用没有就默认
+      const targetIndexParam = AppStorage.get("targetNavIndex") as number
+      console.log("target+++++++",targetIndexParam)
+      if (targetIndexParam || targetIndexParam===0) {
+
+        this.activeIndex=targetIndexParam
+        this.tabsController.changeIndex(targetIndexParam)
+        AppStorage.set("targetNavIndex",null)
+        return
+      }
+
+      if (this.targetNavIndex || this.targetNavIndex===0) {
+        console.log("show++++",this.targetNavIndex)
+        this.activeIndex=this.targetNavIndex
+        this.tabsController.changeIndex(this.targetNavIndex)
+      }
+    })
+    .onHidden(()=>{
+      console.log("hide++++activeIndex",this.activeIndex)
+      this.targetNavIndex=this.activeIndex
+      console.log("hide++++targetNavIndex",this.targetNavIndex)
+    })
+
     .onBackPressed((): boolean => {
       router.back();
       return true;
     })
   }
+
+  onPageShow(): void {
+    console.log("showshow")
+  }
+
 }
 
 @Builder

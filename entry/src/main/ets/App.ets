@@ -6,7 +6,8 @@ struct App {
   // 路由栈
   @Provide navPathStack: NavPathStack = new NavPathStack()
   @Provide isAgreeLicense: boolean = false;
-  
+  @Provide targetNavIndex: number | null = null;
+
   build() {
     Navigation(this.navPathStack) {
       Column() {
@@ -20,4 +21,17 @@ struct App {
     .hideBackButton(true)
     .hideToolBar(true)
   }
+
+  aboutToAppear(): void {
+    const targetIndexParam = AppStorage.get("targetNavIndex") as number
+    if (targetIndexParam || targetIndexParam===0) {
+      console.log("app targetIndexParam",targetIndexParam)
+      this.targetNavIndex = targetIndexParam
+    }
+  }
+
+  onPageShow(): void {
+    AppStorage.setOrCreate('navPathStackLocal',this.navPathStack)
+  }
+
 }

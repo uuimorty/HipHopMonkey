@@ -5,10 +5,49 @@ import { IBestInit } from "@ibestservices/ibest-ui"
 
 const DOMAIN = 0x0000;
 
+interface Params {
+  targetIndex: number | null
+}
+
 export default class EntryAbility extends UIAbility {
+  // 通过卡片跳转的index
+  private navIndex: number|null = null
+
+
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
+    console.log("want",JSON.stringify(want,null,2))
+    const param = want.parameters?.params as string
+    if (param) {
+      console.log("++++param+++",JSON.stringify(param,null,2))
+      this.navIndex = (JSON.parse(param) as Params).targetIndex
+    }
+
+    // 先判断有没有,有的话就直接传数字
+    if (this.navIndex || this.navIndex===0) {
+      console.log("++++navIndex+++",JSON.stringify(this.navIndex,null,2))
+      AppStorage.setOrCreate('targetNavIndex', this.navIndex)
+    }
+
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
+  }
+
+  onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    const param = want.parameters?.params as string
+    if (param) {
+      console.log("++++param+++",JSON.stringify(param,null,2))
+      this.navIndex = (JSON.parse(param) as Params).targetIndex
+    } else {
+      return
+    }
+    // 先判断有没有,有的话就直接传数字
+    if (this.navIndex || this.navIndex===0) {
+      // delete want.parameters!.params.targetIndex
+      console.log("++++navIndex+++",JSON.stringify(this.navIndex,null,2))
+      AppStorage.setOrCreate('targetNavIndex', this.navIndex)
+      const nav = AppStorage.get('navPathStackLocal') as NavPathStack
+      nav.popToName('Index')
+    }
   }
 
   onDestroy(): void {
@@ -28,7 +67,7 @@ export default class EntryAbility extends UIAbility {
     //
     // AppStorage.setOrCreate('key', 'value')
 
-    windowStage.loadContent("App", (err) => {
+    windowStage.loadContent('App', (err) => {
       if (err.code) {
         console.error('Failed to load the content. Cause:' + JSON.stringify(err));
         return;
@@ -53,6 +92,7 @@ export default class EntryAbility extends UIAbility {
   onForeground(): void {
     // Ability has brought to foreground
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onForeground');
+
   }
 
   onBackground(): void {

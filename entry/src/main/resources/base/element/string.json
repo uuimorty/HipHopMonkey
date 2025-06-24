@@ -11,6 +11,23 @@
     {
       "name": "EntryAbility_label",
       "value": "嘻哈猴"
+    },
+    {
+      "name": "EntryFormAbility_desc",
+      "value": "嘻哈猴卡片"
+    },
+    {
+      "name": "EntryFormAbility_label",
+      "value": "嘻哈猴卡片"
+    },
+    {
+      "name": "recommendWidget_display_name",
+      "value": "嘻哈猴推荐"
+    },
+    {
+      "name": "recommendWidget_desc",
+      "value": "热点大小事，随时都知道"
     }
+
   ]
 }
