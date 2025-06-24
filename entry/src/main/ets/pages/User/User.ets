@@ -1,5 +1,11 @@
-import { IBestCell, IBestCellGroup, IBestPopup } from '@ibestservices/ibest-ui';
+import { IBestCell, IBestCellGroup } from '@ibestservices/ibest-ui';
 import UserViewModel from '../../ViewModel/UserViewModel';
+import { UserMarkImage } from '../../components/User/UserMarkImage';
+
+export interface Params {
+  userId: number
+  tabActiveIndex: number
+}
 
 @Component
 export default struct User {
@@ -7,19 +13,15 @@ export default struct User {
   @State userViewModel: UserViewModel = new UserViewModel()
   @State visible: boolean = false
 
-  @Builder
-  centerBuilder(src: string) {
-    Column() {
-      Image(src).width("100%")
-        .aspectRatio(1).hitTestBehavior(HitTestMode.None)
+  params(index: number): Params | void {
+    if (this.userViewModel.userData.user?.userId) {
+      return {
+        userId: this.userViewModel.userData.user.userId,
+        tabActiveIndex: index
+      }
+    } else {
+      console.log("userId未获取成功")
     }
-    .width("100%")
-    .height("100%")
-    .alignItems(HorizontalAlign.Center)
-    .justifyContent(FlexAlign.Center)
-    .onClick(() => {
-      this.visible = false
-    })
   }
 
   @Builder
@@ -29,9 +31,6 @@ export default struct User {
 
   aboutToAppear(): void {
     this.userViewModel.getUserData()
-
-    console.log("s", AppStorage.get('token'));
-    //loading
   }
 
   build() {
@@ -51,7 +50,10 @@ export default struct User {
                   Text(this.userViewModel.userData.user?.nickname).fontSize(20).margin({ left: 10 })
                   SymbolGlyph($r("sys.symbol.chevron_right")).fontSize(30)
                 }.flexGrow(1).margin({ left: 10 }).justifyContent(FlexAlign.SpaceBetween).onClick(() => {
-                  // this.navPathStack.pushPath("UserNotes")
+                  this.navPathStack.pushPath({
+                    name: "UserNotes",
+                    param: this.params(0)
+                  })
                 })
               }.alignItems(VerticalAlign.Center).width("100%")
 
@@ -78,22 +80,30 @@ export default struct User {
               Column() {
                 Image($r("app.media.note")).width(30)
                 Text("帖子").margin({ top: 5 })
-              }
+              }.onClick(() => {
+                this.navPathStack.pushPath({ name: "UserNotes", param: this.params(0) })
+              })
 
               Column() {
                 Image($r("app.media.remark")).width(30)
                 Text("评论").margin({ top: 5 })
-              }
+              }.onClick(() => {
+                this.navPathStack.pushPath({ name: "UserNotes", param: this.params(2) })
+              })
 
               Column() {
                 Image($r("app.media.good")).width(30)
                 Text("点赞").margin({ top: 5 })
-              }
+              }.onClick(() => {
+                this.navPathStack.pushPath({ name: "UserNotes", param: this.params(1) })
+              })
 
               Column() {
                 Image($r("app.media.like")).width(30)
                 Text("收藏").margin({ top: 5 })
-              }
+              }.onClick(() => {
+                this.navPathStack.pushPath({ name: "UserNotes", param: this.params(3) })
+              })
             }
             .width("100%")
             .height(90)
@@ -163,20 +173,11 @@ export default struct User {
 
           }.padding(14)
 
-          IBestPopup({
-            visible: $visible,
-            bgColor: Color.Black,
-            popupWidth: "100%",
-            popupHeight: "100%",
-            contentBuilder: (): void => this.centerBuilder(this.userViewModel.userData.user?.avatar),
-
-
-          })
+          UserMarkImage({ visible: this.visible, src: this.userViewModel.userData.user?.avatar })
         }
 
       }
-
     }
-    .height("100%")
+
   }
 }

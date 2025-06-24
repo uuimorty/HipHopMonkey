@@ -11,12 +11,6 @@ struct Index {
   @Consume targetNavIndex:number;
   private  tabsController: TabsController = new TabsController()
 
-  // updateActiveIndexByCard(){
-  //   console.log('watch!!!!!')
-  //   this.activeIndex=this.targetNavIndex
-  //   this.tabsController.changeIndex(this.targetNavIndex)
-  // }
-
   @Builder
   TabBarItemBuilder(defaultIcon: Resource, activeIcon: Resource, label: string, index: number) {
     Column({ space: 6 }) {
@@ -53,6 +47,7 @@ struct Index {
 
 
         TabContent() {
+
           User()
         }.tabBar(this.TabBarItemBuilder($r('sys.symbol.person'), $r('sys.symbol.person_crop_circle_fill'), '我的', 3))
 
@@ -63,8 +58,7 @@ struct Index {
       .barBackgroundColor(0Xfefffe)
       .divider({ strokeWidth: 1, color: '#eeeeee' })
       .scrollable(false)
-      .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
-
+      .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP]) //拓展安全区
     }
     .height('100%')
     .width('100%')

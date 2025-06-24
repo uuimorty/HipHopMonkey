@@ -52,3 +52,33 @@ export class AppointUserData {
   attentionState?: number = 0;
 }
 
+//获取指定用户的关注信息
+export class UserConcerned {
+  data?: UserConcernedData[] = [];
+  msg?: string = "";
+  code?: number = 0;
+}
+
+export class UserConcernedData {
+  userId?: number = 0;
+  nickname?: string = "";
+  avatar?: string = "";
+  signature?: string = "";
+  attention?: number = 0;
+}
+
+//获取指定用户的粉丝信息
+export class UserFans {
+  data?: UserFansData[] = [];
+  msg?: string = "";
+  code?: number = 0;
+}
+
+export class UserFansData {
+  userId?: number = 0;
+  nickname?: string = "";
+  avatar?: string = "";
+  signature?: string = "";
+  attention?: number = 0;
+}
+

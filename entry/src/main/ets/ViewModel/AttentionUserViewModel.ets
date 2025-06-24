@@ -12,7 +12,6 @@ export default class GetAttentionViewModel {
   @Track attentionState: number = 0
   @Track attentionUserData: AttentionUser = {}
 
-
   async loadingAttentionUserData(params: paramsType) {
     const userId = params.userId
     const status = params.status

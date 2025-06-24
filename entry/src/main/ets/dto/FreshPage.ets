@@ -2,6 +2,7 @@ export class FreshPage {
 	code?: number = 0;
 	data?: FreshPageData[] = [];
 	msg?: string = "";
+
 }
 export class FreshPageDataInfo {
 	commentNum?: number = 0;

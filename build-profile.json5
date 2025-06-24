@@ -17,10 +17,25 @@
     ],
     "buildModeSet": [
       {
-        "name": "debug",
+        "name": "debug"
       },
       {
         "name": "release"
+      }
+    ],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/fish/.ohos/config/default_HipHopMonkey_roeVUd5OqPVJe13MUeO651Ka8gi4hK8674WP-d75wPQ=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001A16FD7A26291EBAB02D3CF59EAF16F9F08D1DDFF03CBA236F81488925D4461A1AA773F4274B2C",
+          "profile": "/Users/fish/.ohos/config/default_HipHopMonkey_roeVUd5OqPVJe13MUeO651Ka8gi4hK8674WP-d75wPQ=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/fish/.ohos/config/default_HipHopMonkey_roeVUd5OqPVJe13MUeO651Ka8gi4hK8674WP-d75wPQ=.p12",
+          "storePassword": "0000001AF283D9B13C6EACF1FF6AF71CFEBBFD0714406C2E522455C86E4DB2581F3DC0504E50976488B7"
+        }
       }
     ]
   },

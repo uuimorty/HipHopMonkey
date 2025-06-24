@@ -44,6 +44,11 @@
       "name": "ReportJokeContent",
       "pageSourceFile": "src/main/ets/pages/report/reportJokeContent.ets",
       "buildFunction": "repostJokeContentBuilder"
+    },
+    {
+      "name": "UserConcerned",
+      "pageSourceFile": "src/main/ets/components/User/UserConcerned.ets",
+      "buildFunction": "UserConcernedBuilder"
     }
   ]
 }
